@@ -1,14 +1,39 @@
 import HText from "@/shared/HText";
-import { SelectedPage } from "@/shared/types";
+import { BenefitType, SelectedPage } from "@/shared/types";
 import {
   HomeModernIcon,
   UserGroupIcon,
   AcademicCapIcon,
 } from "@heroicons/react/24/solid";
 import { motion } from "framer-motion";
+import Benefit from "./Benefit";
 
+const benefits: Array<BenefitType> = [
+  {
+    icon: <HomeModernIcon className="h-6 w-6" />,
+    title: "State of the Art Facilities",
+    description: "Neque adipiscing amet amet enim.",
+  },
+  {
+    icon: <UserGroupIcon className="h-6 w-6" />,
+    title: "100's of Diverses Classes",
+    description: "Neque adipiscing amet amet enim.",
+  },
+  {
+    icon: <AcademicCapIcon className="h-6 w-6" />,
+    title: "Expert and Pro trainers",
+    description: "Fusce vestibulum aliquam ut cras",
+  },
+];
 type Props = {
   setSelectedPage: (value: SelectedPage) => void;
+};
+
+const container = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.2 },
+  }
 };
 
 const Benefits = ({ setSelectedPage }: Props) => {
@@ -28,9 +53,23 @@ const Benefits = ({ setSelectedPage }: Props) => {
           </p>
         </div>
         {/** BENEFITS */}
-        <div className="md:flex">
-
-        </div>
+        <motion.div
+          className="mt-5 items-center justify-between gap-8 md:flex"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{once:true, amount: 0.5}}
+          variants={container}
+        >
+          {benefits.map((benefit: BenefitType) => (
+            <Benefit
+              key={benefit.title}
+              icon={benefit.icon}
+              title={benefit.title}
+              description={benefit.description}
+              setSelectedPage={setSelectedPage}
+            />
+          ))}
+        </motion.div>
       </motion.div>
     </section>
   );
